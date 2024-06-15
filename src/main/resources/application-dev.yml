@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/blog?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: 12345678
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+logging:
+  level:
+    root: info
+    com.dev: debug
+  file:
+    path: log/blog-dev.log
