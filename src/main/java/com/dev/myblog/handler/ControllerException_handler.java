@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
-public class ControllerExceptionHandler {
+public class ControllerException_handler {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @ExceptionHandler(Exception.class)
     public ModelAndView exceptionHandler(HttpServletRequest req, Exception e) throws Exception {
-        logger.error("Requst URL : {}，Exception : {}", req.getRequestURL(), e);
+        logger.error("Request URL : {}，Exception : {}", req.getRequestURL(), e);
 
         if(AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null) {
             throw e;
