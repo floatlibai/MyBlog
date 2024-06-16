@@ -23,6 +23,11 @@ public class LoginController {
         return "admin/login";
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "admin/login";
+    }
+
     @PostMapping("/login")
     public String login(@RequestParam String username,
                         @RequestParam String password,

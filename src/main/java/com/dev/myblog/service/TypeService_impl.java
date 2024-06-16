@@ -6,9 +6,13 @@ import com.dev.myblog.pojo.Type;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class TypeService_impl implements TypeService{
@@ -22,13 +26,11 @@ public class TypeService_impl implements TypeService{
         return typeRepository.save(type);
     }
 
-    @Transactional
     @Override
-    public Type getTypeById(Long id) {
+    public Type getType(Long id) {
         return typeRepository.findById(id).orElse(null);
     }
 
-    @Transactional
     @Override
     public Type getTypeByName(String name) {
         return typeRepository.findByName(name);
@@ -45,7 +47,6 @@ public class TypeService_impl implements TypeService{
         return typeRepository.save(t);
     }
 
-    @Transactional
     @Override
     public Page<Type> listType(Pageable pageable) {
         return typeRepository.findAll(pageable);
@@ -55,5 +56,18 @@ public class TypeService_impl implements TypeService{
     @Override
     public void deleteType(Long id) {
         typeRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Type> listType() {
+        return typeRepository.findAll();
+    }
+
+
+    @Override
+    public List<Type> listTypeTop(Integer size) {
+        Sort sort = Sort.by(Sort.Direction.DESC,"blogs.size");
+        Pageable pageable = PageRequest.of(0,size,sort);
+        return typeRepository.findTop(pageable);
     }
 }
