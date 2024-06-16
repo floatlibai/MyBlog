@@ -1,4 +1,4 @@
-package com.dev.myblog.entity;
+package com.dev.myblog.pojo;
 
 import jakarta.persistence.*;
 

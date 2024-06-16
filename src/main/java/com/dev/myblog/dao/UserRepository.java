@@ -1,4 +1,8 @@
 package com.dev.myblog.dao;
 
-public interface UserRepository {
+import com.dev.myblog.pojo.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+    User findByUsernameAndPassword(String username, String password);
 }
