@@ -36,6 +36,23 @@ public class TypeService_impl implements TypeService{
         return typeRepository.findByName(name);
     }
 
+    @Override
+    public Page<Type> listType(Pageable pageable) {
+        return typeRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Type> listType() {
+        return typeRepository.findAll();
+    }
+
+    @Override
+    public List<Type> listTypeTop(Integer size) {
+        Sort sort = Sort.by(Sort.Direction.DESC,"blogs.size");
+        Pageable pageable = PageRequest.of(0,size,sort);
+        return typeRepository.findTop(pageable);
+    }
+
     @Transactional
     @Override
     public Type updateType(Long id, Type type) {
@@ -47,27 +64,9 @@ public class TypeService_impl implements TypeService{
         return typeRepository.save(t);
     }
 
-    @Override
-    public Page<Type> listType(Pageable pageable) {
-        return typeRepository.findAll(pageable);
-    }
-
     @Transactional
     @Override
     public void deleteType(Long id) {
         typeRepository.deleteById(id);
-    }
-
-    @Override
-    public List<Type> listType() {
-        return typeRepository.findAll();
-    }
-
-
-    @Override
-    public List<Type> listTypeTop(Integer size) {
-        Sort sort = Sort.by(Sort.Direction.DESC,"blogs.size");
-        Pageable pageable = PageRequest.of(0,size,sort);
-        return typeRepository.findTop(pageable);
     }
 }

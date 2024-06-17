@@ -37,26 +37,9 @@ public class TagService_impl implements TagService{
         return tagRepository.findByName(name);
     }
 
-    @Transactional
-    @Override
-    public Tag updateTag(Long id, Tag tag) {
-        Tag t = tagRepository.findById(id).orElse(null);
-        if (t == null) {
-            throw new NotFoundException("不存在该标签");
-        }
-        BeanUtils.copyProperties(tag,t);
-        return tagRepository.save(t);
-    }
-
     @Override
     public Page<Tag> listTag(Pageable pageable) {
         return tagRepository.findAll(pageable);
-    }
-
-    @Transactional
-    @Override
-    public void deleteTag(Long id) {
-        tagRepository.deleteById(id);
     }
 
     @Override
@@ -71,10 +54,26 @@ public class TagService_impl implements TagService{
         return tagRepository.findTop(pageable);
     }
 
-
     @Override
     public List<Tag> listTag(String ids) { //1,2,3
         return tagRepository.findAllById(convertToList(ids));
+    }
+
+    @Transactional
+    @Override
+    public Tag updateTag(Long id, Tag tag) {
+        Tag t = tagRepository.findById(id).orElse(null);
+        if (t == null) {
+            throw new NotFoundException("不存在该标签");
+        }
+        BeanUtils.copyProperties(tag,t);
+        return tagRepository.save(t);
+    }
+
+    @Transactional
+    @Override
+    public void deleteTag(Long id) {
+        tagRepository.deleteById(id);
     }
 
     private List<Long> convertToList(String ids) {
@@ -87,5 +86,4 @@ public class TagService_impl implements TagService{
         }
         return list;
     }
-
 }

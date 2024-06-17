@@ -14,11 +14,7 @@ public interface TagService {
 
     Tag getTagByName(String name);
 
-    Tag updateTag(Long id, Tag tag);
-
     Page<Tag> listTag(Pageable pageable);
-
-    void deleteTag(Long id);
 
     List<Tag> listTag();
 
@@ -26,4 +22,7 @@ public interface TagService {
 
     List<Tag> listTag(String ids);
 
+    Tag updateTag(Long id, Tag tag);
+
+    void deleteTag(Long id);
 }
