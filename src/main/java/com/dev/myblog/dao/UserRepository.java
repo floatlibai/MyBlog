@@ -1,6 +1,6 @@
 package com.dev.myblog.dao;
 
-import com.dev.myblog.pojo.User;
+import com.dev.myblog.po.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {

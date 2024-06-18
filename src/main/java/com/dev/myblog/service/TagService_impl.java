@@ -2,7 +2,7 @@ package com.dev.myblog.service;
 
 import com.dev.myblog.NotFoundException;
 import com.dev.myblog.dao.TagRepository;
-import com.dev.myblog.pojo.Tag;
+import com.dev.myblog.po.Tag;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

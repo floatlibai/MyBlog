@@ -1,6 +1,6 @@
 package com.dev.myblog.web.admin;
 
-import com.dev.myblog.pojo.Type;
+import com.dev.myblog.po.Type;
 import com.dev.myblog.service.TypeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

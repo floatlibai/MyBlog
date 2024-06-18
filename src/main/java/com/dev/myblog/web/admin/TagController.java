@@ -1,6 +1,6 @@
 package com.dev.myblog.web.admin;
 
-import com.dev.myblog.pojo.Tag;
+import com.dev.myblog.po.Tag;
 import com.dev.myblog.service.TagService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

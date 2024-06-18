@@ -462,7 +462,7 @@ h5,h6{font-size:1em;}
 <!--        </div>-->
 
       </div>
-      <div class="ui attached positive message" th:if="${blog.shareStatement}">
+      <div class="ui attached positive message" th:if="${blog.shareable}">
         <!--博客信息-->
         <div class="ui middle aligned grid">
           <div class="eleven wide column">
@@ -478,7 +478,7 @@ h5,h6{font-size:1em;}
 <!--          </div>-->
         </div>
       </div>
-      <div  class="ui bottom attached segment" th:if="${blog.commentabled}">
+      <div  class="ui bottom attached segment" th:if="${blog.commentable}">
         <!--留言区域列表-->
         <div id="comment-container"  class="ui teal segment">
           <div th:fragment="commentList">

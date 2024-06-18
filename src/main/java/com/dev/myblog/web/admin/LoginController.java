@@ -1,6 +1,6 @@
 package com.dev.myblog.web.admin;
 
-import com.dev.myblog.pojo.User;
+import com.dev.myblog.po.User;
 import com.dev.myblog.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;

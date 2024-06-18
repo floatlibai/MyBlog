@@ -1,6 +1,6 @@
 package com.dev.myblog.dao;
 
-import com.dev.myblog.pojo.Tag;
+import com.dev.myblog.po.Tag;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

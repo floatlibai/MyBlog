@@ -72,8 +72,8 @@
           </div>
           <div class="field">
             <div class="ui checkbox">
-              <input type="checkbox" id="recommend" name="recommend">
-              <label for="recommend">推荐</label>
+              <input type="checkbox" id="recommendable" name="recommendable">
+              <label for="recommendable">推荐</label>
             </div>
           </div>
           <div class="field">
@@ -99,7 +99,7 @@
             <td th:text="${iterStat.count}">1</td>
             <td th:text="${blog.title}">刻意练习清单</td>
             <td th:text="${blog.type.name}">认知升级</td>
-            <td th:text="${blog.recommend} ? '是':'否'">是</td>
+            <td th:text="${blog.recommendable} ? '是':'否'">是</td>
             <td th:text="${blog.published} ? '发布':'草稿'">草稿</td>
             <td th:text="${blog.updateTime}">2024-06-14 20:42</td>
             <td>
@@ -212,7 +212,7 @@
       $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search",{
         title : $("[name='title']").val(),
         typeId : $("[name='typeId']").val(),
-        recommend : $("[name='recommend']").prop('checked'),
+        recommendable : $("[name='recommendable']").prop('checked'),
         page : $("[name='page']").val()
       });
     }

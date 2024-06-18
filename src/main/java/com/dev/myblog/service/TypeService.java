@@ -1,6 +1,6 @@
 package com.dev.myblog.service;
 
-import com.dev.myblog.pojo.Type;
+import com.dev.myblog.po.Type;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
