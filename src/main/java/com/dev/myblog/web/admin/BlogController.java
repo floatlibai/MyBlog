@@ -23,9 +23,6 @@ import vo.BlogQuery;
 @RequestMapping("/admin")
 public class BlogController {
 
-    private static final String LIST = "admin/blogs";
-    private static final String REDIRECT_LIST = "redirect:/admin/blogs";
-
     @Autowired
     private BlogService blogService;
 
@@ -59,15 +56,15 @@ public class BlogController {
         return "admin/blogs-input";
     }
 
-//    @GetMapping("/blogs/{id}/input")
-//    public String editInput(@PathVariable Long id, Model model) {
-//        model.addAttribute("types", typeService.listType());
-//        model.addAttribute("tags", tagService.listTag());
-//        Blog blog = blogService.getBlog(id);
-//        blog.init();
-//        model.addAttribute("blog",blog);
-//        return "admin/blogs-input";
-//    }
+    @GetMapping("/blogs/{id}/input")
+    public String editInput(@PathVariable Long id, Model model) {
+        model.addAttribute("types", typeService.listType());
+        model.addAttribute("tags", tagService.listTag());
+        Blog blog = blogService.getBlog(id);
+        blog.init();
+        model.addAttribute("blog",blog);
+        return "admin/blogs-input";
+    }
 
     @PostMapping("/blogs")
     public String post(Blog blog, RedirectAttributes attributes, HttpSession session) {
@@ -86,6 +83,13 @@ public class BlogController {
         } else {
             attributes.addFlashAttribute("message", "操作成功");
         }
+        return "redirect:/admin/blogs";
+    }
+
+    @GetMapping("/blogs/{id}/delete")
+    public String delete(@PathVariable Long id,RedirectAttributes attributes) {
+        blogService.deleteBlog(id);
+        attributes.addFlashAttribute("message", "删除成功");
         return "redirect:/admin/blogs";
     }
 
