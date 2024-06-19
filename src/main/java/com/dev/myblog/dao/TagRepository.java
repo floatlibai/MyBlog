@@ -10,6 +10,6 @@ import java.util.List;
 public interface TagRepository extends JpaRepository<Tag, Long> {
     Tag findByName(String name);
 
-    @Query("select t from Tag t")
+    @Query("select t from Tag t ORDER BY SIZE(t.blogs) DESC")
     List<Tag> findTop(Pageable pageable);
 }

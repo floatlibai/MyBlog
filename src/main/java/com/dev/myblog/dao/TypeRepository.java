@@ -10,6 +10,6 @@ import java.util.List;
 public interface TypeRepository extends JpaRepository<Type, Long> {
     Type findByName(String name);
 
-    @Query("select t from Type t")
+    @Query("select t from Type t ORDER BY SIZE(t.blogs) DESC")
     List<Type> findTop(Pageable pageable);
 }

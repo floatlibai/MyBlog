@@ -49,8 +49,9 @@ public class TagService_impl implements TagService{
 
     @Override
     public List<Tag> listTagTop(Integer size) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "blogs.size");
-        Pageable pageable = PageRequest.of(0, size, sort);
+//        Sort sort = Sort.by(Sort.Direction.DESC, "blogs.size");
+//        Pageable pageable = PageRequest.of(0, size, sort);
+        Pageable pageable = PageRequest.of(0, size);
         return tagRepository.findTop(pageable);
     }
 
