@@ -45,6 +45,9 @@ public class Blog {
     @Transient
     private String tagIds;
 
+//    @Basic(fetch = FetchType.LAZY)
+//    @Lob
+//    @Column(columnDefinition = "LONGTEXT")
     private String description;
 
     public Blog() {

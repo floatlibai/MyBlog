@@ -4,6 +4,7 @@ import com.dev.myblog.NotFoundException;
 import com.dev.myblog.dao.BlogRepository;
 import com.dev.myblog.po.Blog;
 import com.dev.myblog.po.Type;
+import com.dev.myblog.util.Bean_utils;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -101,7 +102,7 @@ public class BlogService_impl implements BlogService {
         if (b == null) {
             throw new NotFoundException("该博客不存在");
         }
-        BeanUtils.copyProperties(blog,b);
+        BeanUtils.copyProperties(blog, b, Bean_utils.getNullPropertyNames(blog)); // filter null properties, like creatTime, etc
         b.setUpdateTime(new Date());
         return blogRepository.save(b);
     }
