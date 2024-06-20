@@ -26,8 +26,8 @@ public interface BlogService {
 
     void deleteBlog(Long id);
 
-//    Blog getAndConvert(Long id);
-//
+    Blog getAndConvert(Long id);
+
 //    Map<String,List<Blog>> archiveBlog();
 //
 //    Long countBlog();

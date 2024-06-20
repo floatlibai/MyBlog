@@ -5,6 +5,7 @@ import com.dev.myblog.dao.BlogRepository;
 import com.dev.myblog.po.Blog;
 import com.dev.myblog.po.Type;
 import com.dev.myblog.util.Bean_utils;
+import com.dev.myblog.util.Markdown_utils;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -113,5 +114,21 @@ public class BlogService_impl implements BlogService {
     @Override
     public void deleteBlog(Long id) {
         blogRepository.deleteById(id);
+    }
+
+    @Transactional
+    @Override
+    public Blog getAndConvert(Long id) {
+        Blog blog = blogRepository.findById(id).orElse(null);
+        if (blog == null) {
+            throw new NotFoundException("该博客不存在");
+        }
+        Blog b = new Blog();
+        BeanUtils.copyProperties(blog,b);
+        String content = b.getContent();
+        b.setContent(Markdown_utils.markdownToHtmlExtensions(content));
+
+        blogRepository.updateViews(id);
+        return b;
     }
 }
