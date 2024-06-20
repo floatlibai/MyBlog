@@ -85,11 +85,11 @@ public class BlogService_impl implements BlogService {
 //        },pageable);
 //    }
 //
-//    @Override
-//    public Page<Blog> listBlog(String query, Pageable pageable) {
-//        return blogRepository.findByQuery(query,pageable);
-//    }
-//
+    @Override
+    public Page<Blog> listBlog(String query, Pageable pageable) {
+        return blogRepository.findByQuery(query, pageable);
+    }
+
     @Override
     public List<Blog> listRecommendBlogTop(Integer size) {
         Sort sort = Sort.by(Sort.Direction.DESC,"updateTime");
