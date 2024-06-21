@@ -3,7 +3,7 @@ package com.dev.myblog.service;
 import com.dev.myblog.po.Blog;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import vo.BlogQuery;
+import com.dev.myblog.vo.BlogQuery;
 
 import java.util.List;
 

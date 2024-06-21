@@ -1,4 +1,4 @@
-package vo;
+package com.dev.myblog.vo;
 
 public class BlogQuery {
 

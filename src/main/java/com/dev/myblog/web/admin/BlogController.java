@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import vo.BlogQuery;
+import com.dev.myblog.vo.BlogQuery;
 
 @Controller
 @RequestMapping("/admin")
