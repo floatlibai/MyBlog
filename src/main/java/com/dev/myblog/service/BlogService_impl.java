@@ -6,10 +6,7 @@ import com.dev.myblog.po.Blog;
 import com.dev.myblog.po.Type;
 import com.dev.myblog.util.Bean_utils;
 import com.dev.myblog.util.Markdown_utils;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -75,17 +72,17 @@ public class BlogService_impl implements BlogService {
         return blogRepository.findAll(pageable);
     }
 
-//    @Override
-//    public Page<Blog> listBlog(Long tagId, Pageable pageable) {
-//        return blogRepository.findAll(new Specification<Blog>() {
-//            @Override
-//            public Predicate toPredicate(Root<Blog> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-//                Join join = root.join("tags");
-//                return cb.equal(join.get("id"),tagId);
-//            }
-//        },pageable);
-//    }
-//
+    @Override
+    public Page<Blog> listBlog(Long tagId, Pageable pageable) {
+        return blogRepository.findAll(new Specification<Blog>() {
+            @Override
+            public Predicate toPredicate(Root<Blog> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+                Join join = root.join("tags");
+                return cb.equal(join.get("id"),tagId);
+            }
+        },pageable);
+    }
+
     @Override
     public Page<Blog> listBlog(String query, Pageable pageable) {
         return blogRepository.findByQuery(query, pageable);
