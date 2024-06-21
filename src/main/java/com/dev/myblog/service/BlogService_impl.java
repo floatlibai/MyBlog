@@ -18,9 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.dev.myblog.vo.BlogQuery;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class BlogService_impl implements BlogService {
@@ -127,5 +125,24 @@ public class BlogService_impl implements BlogService {
 
         blogRepository.updateViews(id);
         return b;
+    }
+
+    @Override
+    public Map<String, List<Blog>> archiveBlog() {
+        List<String> years = blogRepository.findGroupYear();
+        Map<String, List<Blog>> map = new TreeMap<>(Comparator.reverseOrder());
+        for (String year : years) {
+            map.put(year, blogRepository.findByYear(year));
+        }
+        for (Map.Entry<String, List<Blog>> entry : map.entrySet()) {
+            List<Blog> list = entry.getValue();
+            list.sort(Comparator.comparing(Blog::getUpdateTime));
+        }
+        return map;
+    }
+
+    @Override
+    public Long countBlog() {
+        return blogRepository.count();
     }
 }
