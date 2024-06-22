@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Objects;
+
 @Controller
 public class CommentController {
 
@@ -39,7 +41,9 @@ public class CommentController {
         User user = (User) session.getAttribute("user");
         if (user != null) {
             comment.setAvatar(user.getAvatar());
-            comment.setAdminComment(true);
+            if(Objects.equals(user.getId(), comment.getBlog().getUser().getId())) {
+                comment.setAdminComment(true);
+            }
         } else {
             comment.setAvatar(avatar);
         }
