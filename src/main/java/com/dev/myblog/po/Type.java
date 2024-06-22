@@ -53,4 +53,8 @@ public class Type {
                 ", name='" + name + '\'' +
                 '}';
     }
+
+    public Long getPublishedBlogCount() {
+        return blogs.stream().filter(Blog::isPublished).count();
+    }
 }

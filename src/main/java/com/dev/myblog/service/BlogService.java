@@ -14,11 +14,11 @@ public interface BlogService {
 
     Blog getBlog(Long id);
 
-    Page<Blog> listBlog(Pageable pageable, BlogQuery blog);
+    Page<Blog> listPublishedBlog(Pageable pageable, BlogQuery blog);
 
     Page<Blog> listBlog(Pageable pageable);
 
-    Page<Blog> listBlog(Long tagId,Pageable pageable);
+    Page<Blog> listPublishedBlog(Long tagId,Pageable pageable);
 
     Page<Blog> listBlog(String query,Pageable pageable);
 
@@ -36,4 +36,6 @@ public interface BlogService {
 
     // for multi users
     Page<Blog> listBlog(Pageable pageable, BlogQuery blogQuery, HttpSession session);
+
+    Page<Blog> listPublishedBlog(Pageable pageable);
 }

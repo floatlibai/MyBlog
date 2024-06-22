@@ -47,7 +47,7 @@ public class BlogService_impl implements BlogService {
     }
 
     @Override
-    public Page<Blog> listBlog(Pageable pageable, BlogQuery blogQuery) { // for dynamic query and combined query
+    public Page<Blog> listPublishedBlog(Pageable pageable, BlogQuery blogQuery) { // for dynamic query and combined query
         return blogRepository.findAll(new Specification<Blog>() {
             @Override
             public Predicate toPredicate(Root<Blog> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
@@ -61,6 +61,7 @@ public class BlogService_impl implements BlogService {
                 if(blogQuery.isRecommendable()) {
                     predicates.add(criteriaBuilder.equal(root.<Boolean>get("recommendable"), true));
                 }
+                predicates.add(criteriaBuilder.equal(root.<Boolean>get("published"), true));
                 query.where(predicates.toArray(new Predicate[predicates.size()]));
                 return null;
             }
@@ -73,12 +74,14 @@ public class BlogService_impl implements BlogService {
     }
 
     @Override
-    public Page<Blog> listBlog(Long tagId, Pageable pageable) {
+    public Page<Blog> listPublishedBlog(Long tagId, Pageable pageable) {
         return blogRepository.findAll(new Specification<Blog>() {
             @Override
             public Predicate toPredicate(Root<Blog> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
                 Join join = root.join("tags");
-                return cb.equal(join.get("id"),tagId);
+                Predicate tagPredicate = cb.equal(join.get("id"), tagId);
+                Predicate publishedPredicate = cb.isTrue(root.get("published"));
+                return cb.and(tagPredicate, publishedPredicate);
             }
         },pageable);
     }
@@ -138,7 +141,7 @@ public class BlogService_impl implements BlogService {
         }
         for (Map.Entry<String, List<Blog>> entry : map.entrySet()) {
             List<Blog> list = entry.getValue();
-            list.sort(Comparator.comparing(Blog::getUpdateTime));
+            list.sort(Comparator.comparing(Blog::getUpdateTime).reversed());
         }
         return map;
     }
@@ -169,5 +172,10 @@ public class BlogService_impl implements BlogService {
                 return null;
             }
         }, pageable);
+    }
+
+    @Override
+    public Page<Blog> listPublishedBlog(Pageable pageable) {
+        return blogRepository.findByPublishedTrue(pageable);
     }
 }

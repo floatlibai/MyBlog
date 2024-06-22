@@ -50,7 +50,7 @@
       <div class="ui attached segment m-padded-tb-large">
         <div class="ui labeled button m-margin-tb-tiny" th:each="type : ${types}">
           <a href="#" th:href="@{/types/{id}(id=${type.id})}" class="ui basic  button" th:classappend="${type.id==activeTypeId} ? 'teal'" th:text="${type.name}">思考与感悟</a>
-          <div class="ui basic  left pointing label" th:classappend="${type.id==activeTypeId} ? 'teal'" th:text="${#arrays.length(type.blogs)}">24</div>
+          <div class="ui basic  left pointing label" th:classappend="${type.id==activeTypeId} ? 'teal'" th:text="${type.publishedBlogCount}">24</div>
         </div>
       </div>
 

@@ -1,5 +1,6 @@
 package com.dev.myblog.web.admin;
 
+import com.dev.myblog.NotFoundException;
 import com.dev.myblog.po.Blog;
 import com.dev.myblog.po.User;
 import com.dev.myblog.service.BlogService;
@@ -63,7 +64,8 @@ public class BlogController {
         User user = (User) session.getAttribute("user");
         Blog blog = blogService.getBlog(id);
         if(!Objects.equals(blog.getUser().getId(), user.getId())) {
-            return "redirect:/admin/blogs";
+//            return "redirect:/admin/blogs";
+            throw new NotFoundException("该博客不存在");
         }
         blog.init();
         model.addAttribute("types", typeService.listType());
