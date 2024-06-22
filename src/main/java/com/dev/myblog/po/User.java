@@ -12,7 +12,9 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(nullable = false)
     private String nickname;
+    @Column(nullable = false, unique = true)
     private String username;
     private String password;
     private String email;
