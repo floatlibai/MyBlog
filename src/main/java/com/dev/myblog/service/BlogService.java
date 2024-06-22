@@ -1,6 +1,7 @@
 package com.dev.myblog.service;
 
 import com.dev.myblog.po.Blog;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.dev.myblog.vo.BlogQuery;
@@ -32,4 +33,7 @@ public interface BlogService {
     Map<String,List<Blog>> archiveBlog();
 
     Long countBlog();
+
+    // for multi users
+    Page<Blog> listBlog(Pageable pageable, BlogQuery blogQuery, HttpSession session);
 }

@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.dev.myblog.vo.BlogQuery;
 
+import java.util.Objects;
+
 @Controller
 @RequestMapping("/admin")
 public class BlogController {
@@ -34,17 +36,17 @@ public class BlogController {
 
     @GetMapping("/blogs")
     public String blogs(@PageableDefault(size = 2,sort = {"updateTime"},direction = Sort.Direction.DESC)
-                            Pageable pageable, BlogQuery blogQuery, Model model) {
+                            Pageable pageable, BlogQuery blogQuery, Model model, HttpSession session) {
         model.addAttribute("types", typeService.listType());
-        model.addAttribute("page", blogService.listBlog(pageable, blogQuery)); // Query in paging mode
+        model.addAttribute("page", blogService.listBlog(pageable, blogQuery, session)); // Query in paging mode
         return "admin/blogs";
     }
 
     @PostMapping("/blogs/search")
     public String search(@PageableDefault(size = 2,sort = {"updateTime"},direction = Sort.Direction.DESC)
-                        Pageable pageable, BlogQuery blogQuery, Model model) {
+                        Pageable pageable, BlogQuery blogQuery, Model model, HttpSession session) {
 
-        model.addAttribute("page", blogService.listBlog(pageable, blogQuery)); // Query in paging mode
+        model.addAttribute("page", blogService.listBlog(pageable, blogQuery, session)); // Query in paging mode
         return "admin/blogs :: blogList"; // Return only blog list fragment
     }
 
@@ -57,11 +59,15 @@ public class BlogController {
     }
 
     @GetMapping("/blogs/{id}/input")
-    public String editInput(@PathVariable Long id, Model model) {
+    public String editInput(@PathVariable Long id, Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Blog blog = blogService.getBlog(id);
+        if(!Objects.equals(blog.getUser().getId(), user.getId())) {
+            return "redirect:/admin/blogs";
+        }
+        blog.init();
         model.addAttribute("types", typeService.listType());
         model.addAttribute("tags", tagService.listTag());
-        Blog blog = blogService.getBlog(id);
-        blog.init();
         model.addAttribute("blog",blog);
         return "admin/blogs-input";
     }

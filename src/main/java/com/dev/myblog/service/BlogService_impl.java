@@ -4,9 +4,11 @@ import com.dev.myblog.NotFoundException;
 import com.dev.myblog.dao.BlogRepository;
 import com.dev.myblog.po.Blog;
 import com.dev.myblog.po.Type;
+import com.dev.myblog.po.User;
 import com.dev.myblog.util.Bean_utils;
 import com.dev.myblog.util.Markdown_utils;
 import jakarta.persistence.criteria.*;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -144,5 +146,28 @@ public class BlogService_impl implements BlogService {
     @Override
     public Long countBlog() {
         return blogRepository.count();
+    }
+
+    @Override
+    public Page<Blog> listBlog(Pageable pageable, BlogQuery blogQuery, HttpSession session) {
+        return blogRepository.findAll(new Specification<Blog>() {
+            @Override
+            public Predicate toPredicate(Root<Blog> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> predicates = new ArrayList<>();
+                if(!"".equals(blogQuery.getTitle()) && blogQuery.getTitle() != null){
+                    predicates.add(criteriaBuilder.like(root.<String>get("title"), "%"+blogQuery.getTitle()+"%"));
+                }
+                if(blogQuery.getTypeId() != null) {
+                    predicates.add(criteriaBuilder.equal(root.<Type>get("type").get("id"), blogQuery.getTypeId()));
+                }
+                if(blogQuery.isRecommendable()) {
+                    predicates.add(criteriaBuilder.equal(root.<Boolean>get("recommendable"), true));
+                }
+                User user = (User) session.getAttribute("user");
+                predicates.add(criteriaBuilder.equal(root.<User>get("user").get("id"), user.getId()));
+                query.where(predicates.toArray(new Predicate[predicates.size()]));
+                return null;
+            }
+        }, pageable);
     }
 }
