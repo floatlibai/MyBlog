@@ -41,7 +41,7 @@ public class IndexShowController {
     public String search(@PageableDefault(size = 8, sort = {"updateTime"}, direction = Sort.Direction.DESC)
                              Pageable pageable, @RequestParam String query, Model model) {
 //        model.addAttribute("page", blogService.listBlog("%"+query+"%", pageable)); // sql like deal
-        model.addAttribute("page", blogService.listBlog(query, pageable)); // sql injection ?
+        model.addAttribute("page", blogService.listPublishedBlog(query, pageable)); // sql injection ?
         model.addAttribute("query", query);
         return "search";
     }

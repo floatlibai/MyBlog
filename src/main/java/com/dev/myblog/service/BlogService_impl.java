@@ -87,7 +87,7 @@ public class BlogService_impl implements BlogService {
     }
 
     @Override
-    public Page<Blog> listBlog(String query, Pageable pageable) {
+    public Page<Blog> listPublishedBlog(String query, Pageable pageable) {
         return blogRepository.findByQuery(query, pageable);
     }
 

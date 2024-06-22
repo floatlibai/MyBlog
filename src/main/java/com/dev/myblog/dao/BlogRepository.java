@@ -18,7 +18,9 @@ public interface BlogRepository extends JpaRepository<Blog, Long>, JpaSpecificat
     List<Blog> findTop(Pageable pageable);
 
 //    @Query("select b from Blog b where b.title like ?1 or b.description like ?1")
-    @Query("select b from Blog b where b.title like %:query% or b.description like %:query%")
+//    @Query("select b from Blog b where b.title like %:query% or b.description like %:query%")
+//    @Query("select b from Blog b where (b.title like %:query% or b.description like %:query%) and b.published = true")
+    @Query("select b from Blog b where (lower(b.title) like lower(concat('%', :query, '%')) or lower(b.description) like lower(concat('%', :query, '%'))) and b.published = true")
     Page<Blog> findByQuery(@Param("query") String query, Pageable pageable);
 
     @Transactional
