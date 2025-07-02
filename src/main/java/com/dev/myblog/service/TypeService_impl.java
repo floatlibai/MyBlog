@@ -1,8 +1,11 @@
 package com.dev.myblog.service;
 
 import com.dev.myblog.NotFoundException;
+import com.dev.myblog.dao.BlogRepository;
 import com.dev.myblog.dao.TypeRepository;
+import com.dev.myblog.po.Blog;
 import com.dev.myblog.po.Type;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,12 +16,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class TypeService_impl implements TypeService{
 
     @Autowired
     private TypeRepository typeRepository;
+    @Autowired
+    private BlogRepository blogRepository;
 
     @Transactional
     @Override
@@ -68,6 +74,15 @@ public class TypeService_impl implements TypeService{
     @Transactional
     @Override
     public void deleteType(Long id) {
+        if(id == 0) { // set default id 0
+            throw new IllegalArgumentException("Default category cannot be deleted.");
+        }
+        Type defaultType = typeRepository.findById(0L).orElseThrow(() -> new EntityNotFoundException("Default category not found"));
+        List<Blog> blogs = blogRepository.findByTypeId(id);
+        for (Blog blog : blogs) {
+            blog.setType(defaultType);
+            blogRepository.save(blog);
+        }
         typeRepository.deleteById(id);
     }
 }

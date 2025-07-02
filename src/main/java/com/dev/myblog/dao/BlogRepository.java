@@ -35,4 +35,6 @@ public interface BlogRepository extends JpaRepository<Blog, Long>, JpaSpecificat
     List<Blog> findByYear(String year);
 
     Page<Blog> findByPublishedTrue(Pageable pageable);
+
+    List<Blog> findByTypeId(Long typeId);
 }
